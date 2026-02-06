@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five Nights at Epstein's Island</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-container">
+    <div id="goon-hint">PRESS [G] TO GOON</div>
+    
+    <div id="office-view">
+        <div class="room-wrapper">
+            <div class="wall left-wall">
+                <div id="door-frame">
+                    <div id="actual-door"></div>
+                </div>
+                <div class="door-controls">
+                    <div id="door-status-light"></div>
+                    <button class="btn-door" onclick="toggleDoor()">DOOR</button>
+                    <button class="btn-light" onmousedown="toggleLight(true)" onmouseup="toggleLight(false)">LIGHT</button>
+                </div>
+            </div>
+            
+            <div class="wall center-wall">
+                <div class="desk">
+                    <div class="fan"></div>
+                </div>
+            </div>
+
+            <div class="wall right-wall"></div>
+        </div>
+
+        <div id="ui-layer">
+            <div class="stat-box">TIME: <span id="clock">12</span> AM</div>
+            <div class="stat-box">POWER: <span id="power">100</span>%</div>
+        </div>
+    </div>
+
+    <div id="camera-system">
+        <div class="static-effect"></div>
+        
+        <div id="cam-nav-bar">
+            <button class="cam-btn" onclick="changeCam(0, 'MAIN HALLWAY')">HALLWAY</button>
+            <button class="cam-btn" onclick="changeCam(1, 'EPSTEINS ROOM')">ROOM</button>
+            <button class="cam-btn" onclick="changeCam(2, 'CORRIDOR')">CORRIDOR</button>
+            <button class="cam-btn" onclick="changeCam(3, 'END HALLWAY')">END HALLWAY</button>
+        </div>
+
+        <div class="cam-label" id="cam-name">CAM 1 - MAIN HALLWAY</div>
+        <div id="host-presence">WARNING: SUBJECT DETECTED</div>
+        
+        <div id="feed-container">
+            <img id="cam-feed" src="https://picsum.photos/id/231/1200/800" alt="Feed">
+        </div>
+    </div>
+
+    <div id="monitor-toggle" onclick="toggleMonitor()">FLIP MONITOR</div>
+</div>
+
+<div id="jumpscare-screen">
+    <img id="jumpscare-img" src="https://media.giphy.com/media/3o7TKqnN349PBUtGFO/giphy.gif">
+    <h1 id="fail-text">YOU WERE FOUND</h1>
+</div>
+
+<audio id="snd-ambient" loop src="https://www.soundjay.com/free-music_c2026/sounds/cautious-path-01.mp3"></audio>
+<audio id="snd-door" src="https://www.soundjay.com/door_c2026/sounds/creaking-door-2.mp3"></audio>
+<audio id="snd-static" loop src="https://www.soundjay.com/mechanical_c2026/sounds/tv-static-01.mp3"></audio>
+<audio id="snd-jumpscare" src="https://www.soundjay.com/human_c2026/sounds/woman-scream-01.mp3"></audio>
+<audio id="snd-blip" src="https://www.soundjay.com/buttons_c2026/sounds/button-10.mp3"></audio>
+
+<script src="main.js"></script>
+</body>
+</html>
