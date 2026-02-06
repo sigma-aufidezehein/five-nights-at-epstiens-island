@@ -1,6 +1,6 @@
 /**
  * FIVE NIGHTS AT EPSTEIN'S ISLAND
- * Full Code - Top Navigation & Fixed Image Feed
+ * Alpha v1.0 - Persistent Tracking & Goon Logic
  */
 
 let power = 100;
@@ -19,15 +19,14 @@ const sounds = {
     blip: document.getElementById('snd-blip')
 };
 
-// Fixed high-reliability images
 const camImages = [
-    "https://picsum.photos/id/231/1200/800", // Main Hallway
-    "https://picsum.photos/id/232/1200/800", // Epsteins Room
-    "https://picsum.photos/id/233/1200/800", // Corridor
-    "https://picsum.photos/id/234/1200/800"  // End Hallway (Closest)
+    "https://picsum.photos/id/231/1200/800", // HALLWAY
+    "https://picsum.photos/id/232/1200/800", // ROOM
+    "https://picsum.photos/id/233/1200/800", // CORRIDOR
+    "https://picsum.photos/id/234/1200/800"  // END HALLWAY
 ];
 
-// Goon Key Listener
+// Press G to Goon
 window.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'g' && gameStarted) {
         power = 0;
@@ -36,6 +35,7 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+// Start Game
 document.addEventListener('click', () => {
     if (!gameStarted) {
         gameStarted = true;
@@ -45,26 +45,29 @@ document.addEventListener('click', () => {
     }
 }, { once: true });
 
-// --- POWER SYSTEM ---
+// Power System
 setInterval(() => {
     if (gameStarted && power > 0) {
         let drain = 0.04; 
         if (monitorOpen) drain += 0.15;
         if (doorClosed) drain += 0.45;
-        
         power -= drain;
         document.getElementById('power').innerText = Math.max(0, Math.floor(power));
         if (power <= 0) handlePowerOutage();
     }
 }, 1000);
 
-// --- AI (Movement Logic) ---
+// Enemy Movement (AI)
 setInterval(() => {
     if (gameStarted && power > 0) {
+        // 40% chance to move every 5 seconds
         if (Math.random() > 0.6) {
             hostLocation++;
-            console.log("Enemy at: " + hostLocation);
+            console.log("Enemy Position: " + hostLocation);
+            
+            // Critical Fix: Update the UI immediately if the monitor is open
             if (monitorOpen) updateCamView();
+            
             if (hostLocation > 4) checkAttack();
         }
     }
@@ -74,13 +77,15 @@ function checkAttack() {
     if (!doorClosed) {
         triggerJumpscare();
     } else {
+        // Blocked - Reset enemy
         hostLocation = Math.floor(Math.random() * 2); 
         sounds.door.currentTime = 0;
         sounds.door.play();
+        if (monitorOpen) updateCamView();
     }
 }
 
-// --- FAST NIGHT (30s per Hour) ---
+// Night Progression (30s per hour)
 setInterval(() => {
     if (gameStarted && time < 6) {
         time++;
@@ -92,7 +97,7 @@ setInterval(() => {
     }
 }, 30000); 
 
-// --- CAMERA FUNCTIONS ---
+// Game Actions
 function toggleMonitor() {
     if (!gameStarted || power <= 0) return;
     monitorOpen = !monitorOpen;
@@ -120,10 +125,9 @@ function updateCamView() {
     const feed = document.getElementById('cam-feed');
     const warning = document.getElementById('host-presence');
     
-    // Force image change
     feed.src = camImages[currentCam];
     
-    // Show warning if enemy is in current camera
+    // The warning logic now checks every time it runs
     if (hostLocation === currentCam) {
         warning.style.display = 'block';
     } else {
@@ -136,18 +140,15 @@ function toggleDoor() {
     doorClosed = !doorClosed;
     sounds.door.currentTime = 0;
     sounds.door.play();
-
     const doorEl = document.getElementById('actual-door');
     if (doorClosed) doorEl.classList.add('closed');
     else doorEl.classList.remove('closed');
-
     document.getElementById('door-status-light').style.backgroundColor = doorClosed ? 'red' : '#0f0';
 }
 
 function toggleLight(on) {
     if (!gameStarted || power <= 0) return;
-    const wrapper = document.querySelector('.room-wrapper');
-    wrapper.style.filter = on ? "brightness(1.8)" : "brightness(1)";
+    document.querySelector('.room-wrapper').style.filter = on ? "brightness(1.8)" : "brightness(1)";
 }
 
 function handlePowerOutage() {

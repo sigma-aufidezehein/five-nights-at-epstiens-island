@@ -6,7 +6,6 @@ body, html {
 }
 
 #game-container { position: relative; width: 100vw; height: 100vh; perspective: 1200px; }
-
 #goon-hint { position: absolute; top: 10px; right: 10px; font-size: 0.8rem; color: #444; z-index: 100; }
 
 #office-view { width: 100%; height: 100%; display: flex; justify-content: center; background: #050505; }
@@ -29,26 +28,19 @@ body, html {
 
 #monitor-toggle { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 400px; height: 45px; background: rgba(40,40,40,0.9); border: 2px solid #fff; cursor: pointer; text-align: center; line-height: 45px; z-index: 100; }
 
-/* Camera System Fixes */
 #camera-system { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 50; }
-
-#cam-nav-bar {
-    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 10px; z-index: 60; background: rgba(0,0,0,0.7); padding: 10px; border: 1px solid #555;
-}
-
-.cam-btn { padding: 10px; background: #222; color: #fff; border: 1px solid #fff; cursor: pointer; font-family: inherit; }
-.cam-btn:hover { background: #444; }
+#cam-nav-bar { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 60; background: rgba(0,0,0,0.7); padding: 10px; border: 1px solid #555; }
+.cam-btn { padding: 10px; background: #222; color: #fff; border: 1px solid #fff; cursor: pointer; }
 
 #feed-container { width: 100%; height: 100%; overflow: hidden; }
 #cam-feed { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) sepia(0.3); }
+.static-effect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://media.giphy.com/media/oEI9uWU0WMrQmID69D/giphy.gif'); opacity: 0.05; pointer-events: none; z-index: 51; }
 
 .cam-label { position: absolute; bottom: 60px; left: 40px; font-size: 1.5rem; z-index: 60; color: #0f0; }
-
-#host-presence {
+#host-presence { 
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: red; font-weight: bold; font-size: 3rem; display: none;
-    text-shadow: 0 0 20px red; pointer-events: none; z-index: 55;
+    color: #ff0000; font-weight: bold; font-size: 3rem; display: none;
+    text-shadow: 0 0 20px #ff0000; z-index: 65; text-align: center;
 }
 
 #jumpscare-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
